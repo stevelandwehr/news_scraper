@@ -5,10 +5,11 @@ class KGET
 
   def scrape
     doc = Nokogiri::HTML(open('http://www.kerngoldenempire.com/local-news'))
+    end_date = (Date.today + 2.days).strftime('%Y%m%d')
 
     # pagination
     1.upto(3) do |num|
-      page = Nokogiri::HTML(open("http://www.kerngoldenempire.com/local-news?p_p_id=refresharticle_WAR_epwcmportlet&p_p_lifecycle=2&p_p_cacheability=cacheLevelPage&_refresharticle_WAR_epwcmportlet_groupId=118809186&_refresharticle_WAR_epwcmportlet_articleId=CONVS-TABBED_HEADLINE_LIST-TABBED_HEADLINE_LIST_2_0-124631607&_refresharticle_WAR_epwcmportlet_templateId=HEADLINE_LIST_PAGINATION_2.0&pageNum=1&tabNumber=#{num}&endDate=20180114000000000"))
+      page = Nokogiri::HTML(open("http://www.kerngoldenempire.com/local-news?p_p_id=refresharticle_WAR_epwcmportlet&p_p_lifecycle=2&p_p_cacheability=cacheLevelPage&_refresharticle_WAR_epwcmportlet_groupId=118809186&_refresharticle_WAR_epwcmportlet_articleId=CONVS-TABBED_HEADLINE_LIST-TABBED_HEADLINE_LIST_2_0-124631607&_refresharticle_WAR_epwcmportlet_templateId=HEADLINE_LIST_PAGINATION_2.0&pageNum=#{num}&tabNumber=1&endDate=#{end_date}"))
       page_links = page.search('div.headline-wrapper')
       doc.at('section.mod-headline-list ul.list') << page_links
     end
