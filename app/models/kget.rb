@@ -18,7 +18,10 @@ class KGET
     formatted_items = format_items(links)
 
     rss_file_contents = template
-    rss_file_contents.gsub('<!--items-->', formatted_items)
+    rss_file_contents.gsub!('<!--items-->', formatted_items)
+
+    # rss_file = Rails.public_path.to_s + '/kget.rss'
+    # File.write(rss_file, rss_file_contents)
 
     s3_obj = $s3.bucket(ENV['AWS_BUCKET_NAME']).object('kget.rss')
     s3_obj.put(body: rss_file_contents, acl: 'public-read')
